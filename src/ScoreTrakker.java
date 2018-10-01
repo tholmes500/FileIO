@@ -8,7 +8,7 @@ import java.util.*;
 import java.io.*;
 
 public class ScoreTrakker {
-	private ArrayList<Student> students = new ArrayList<Student>();
+	private ArrayList<Student> students;
 	private String[] files = {"scores.txt", "badscore.txt", "nofile.txt"};
 	/**
 	 * loadDataFromFile simply loads data from the text files. Uses a try-catch clause to
@@ -21,16 +21,13 @@ public class ScoreTrakker {
 		students = new ArrayList<Student>();
 		FileReader reader = new FileReader(str);
 		Scanner in = new Scanner(reader);
-		String name = "";
-		int score = 0;
 		while (in.hasNextLine()) {
-			name = in.nextLine();
+			String name = in.nextLine();
 			String scoreString = in.nextLine();
 			try {
-				score = Integer.parseInt(scoreString);
+				int score = Integer.parseInt(scoreString);
 				Student s = new Student(name, score);
 				if (!students.contains(s)) {
-					//System.out.println("Adding " + s);
 					students.add(s);
 				}
 				
@@ -51,6 +48,9 @@ public class ScoreTrakker {
 			System.out.println(s.toString());
 		}
 	}
+	/**
+	 * Function calling for file loading and printing. Also handles the FileNotFoundException.
+	 */
 	public void processFiles() {
 		for (String s: files) {
 			try {
