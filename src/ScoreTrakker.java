@@ -33,11 +33,6 @@ public class ScoreTrakker {
 					//System.out.println("Adding " + s);
 					students.add(s);
 				}
-				/*for (Student stu: students) {
-					if (s != stu) {
-						students.add(s);
-					}
-				}*/
 				
 			} catch (NumberFormatException e) {
 				System.out.println("Incorrect format for " + name + ": not a valid score: " + scoreString);
