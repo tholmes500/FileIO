@@ -1,22 +1,75 @@
+/**
+ * ScoreTrakker reads in files with students and their scores, and organizes the data
+ * and displays them in order.
+ * @author Frank Enciso
+ * @author Sean Little
+ */
 import java.util.*;
+import java.io.*;
 
 public class ScoreTrakker {
-	private ArrayList<Student> students;
-	public void loadDataFromFile(String str) {
-		
+	private ArrayList<Student> students = new ArrayList<Student>();
+	private String[] files = {"scores.txt", "badscore.txt", "nofile.txt"};
+	/**
+	 * loadDataFromFile simply loads data from the text files. Uses a try-catch clause to
+	 * handle any scores that are not numeric
+	 * @param str - the current element in the files array that contains the name of
+	 * the text file 
+	 * @throws FileNotFoundException - thrown if the file is not found (nofile.txt)
+	 */
+	public void loadDataFromFile(String str) throws FileNotFoundException {
+		students = new ArrayList<Student>();
+		FileReader reader = new FileReader(str);
+		Scanner in = new Scanner(reader);
+		String name = "";
+		int score = 0;
+		while (in.hasNextLine()) {
+			name = in.nextLine();
+			String scoreString = in.nextLine();
+			try {
+				score = Integer.parseInt(scoreString);
+				Student s = new Student(name, score);
+				if (!students.contains(s)) {
+					//System.out.println("Adding " + s);
+					students.add(s);
+				}
+				/*for (Student stu: students) {
+					if (s != stu) {
+						students.add(s);
+					}
+				}*/
+				
+			} catch (NumberFormatException e) {
+				System.out.println("Incorrect format for " + name + ": not a valid score: " + scoreString);
+				System.out.println();
+			}
+		}
+		in.close();
 	}
+	/**
+	 * Displays the data in order by name with a line break in between each text file
+	 */
 	public void printInOrder() {
+		System.out.println("Student Score List");
 		Collections.sort(students);
 		for (Student s: students) {
 			System.out.println(s.toString());
 		}
 	}
 	public void processFiles() {
-		
+		for (String s: files) {
+			try {
+				loadDataFromFile(s);
+				printInOrder();
+			} catch (FileNotFoundException e) {
+				System.out.println("Can't open file: " + s);
+			}
+			
+			System.out.println();
+		}
 	}
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
+		ScoreTrakker st = new ScoreTrakker();
+		st.processFiles();
 	}
-
 }

@@ -1,5 +1,5 @@
 /**
- * Reads data from a file
+ * Creates student objects for use in ScoreTrakker class
  * @author Frank Enciso
  * @author Sean Little
  */
@@ -12,18 +12,22 @@ public class Student implements Comparable<Student> {
 		this.score = score;
 	}
 	
+	
+
+	public String getName() {
+		return name;
+	}
+
+
 
 	@Override
 	public String toString() {
-		return "Student [name=" + name + ", score=" + score + "]";
+		return (name + " " + score);
 	}
 
 
 	@Override
-	public int compareTo(Student arg0) {
-		// TODO Auto-generated method stub
-		
-		return 0;
+	public int compareTo(Student other) {
+		return (this.name).compareTo(other.name);
 	}
-
 }
